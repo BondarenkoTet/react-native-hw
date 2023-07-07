@@ -1,5 +1,4 @@
-import React from "react";
-import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,70 +6,87 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 
 export default function RegisterScreen() {
+  console.log(Platform.OS);
+
+  const [text, setText] = useState("");
+  const [number, setNumber] = useState("");
+
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        style={styles.image}
-        source={require("../assets/images/photo-bg.jpg")}
-      >
-        <ImageBackground style={styles.bg}>
-          <Text style={styles.title}>Реєстрація</Text>
-          <View style={styles.form}>
-            <View style={{ marginTop: 32 }}>
-              <TextInput
-                style={styles.input}
-                placeholder="Логін"
-                placeholderTextColor="#a9a9a9"
-              />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{
+            height: "100%",
+            justifyContent: "flex-end",
+          }}
+        >
+          <ImageBackground style={styles.bg}>
+            <View style={styles.form}>
+              <Text style={styles.title}>Реєстрація</Text>
+              <View style={{ marginTop: 32 }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Логін"
+                  placeholderTextColor="#a9a9a9"
+                  value={text}
+                  onChangeText={setText}
+                />
+              </View>
+              <View style={{ marginTop: 16 }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Адреса електронної пошти"
+                  placeholderTextColor="#a9a9a9"
+                  value={text}
+                  onChangeText={setText}
+                />
+              </View>
+              <View style={{ marginTop: 16 }}>
+                <TextInput
+                  style={styles.input}
+                  secureTextEntry={true}
+                  placeholder="Пароль"
+                  placeholderTextColor="#a9a9a9"
+                  value={number}
+                  onChangeText={setNumber}
+                />
+              </View>
             </View>
-            <View style={{ marginTop: 16 }}>
-              <TextInput
-                style={styles.input}
-                placeholder="Адреса електронної пошти"
-                placeholderTextColor="#a9a9a9"
-              />
-            </View>
-            <View style={{ marginTop: 16 }}>
-              <TextInput
-                style={styles.input}
-                secureTextEntry={true}
-                placeholder="Пароль"
-                placeholderTextColor="#a9a9a9"
-              />
-            </View>
-            <TouchableOpacity activeOpacity={0.6} style={styles.btn}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.btn}
+              // onPress={signIn}
+            >
               <Text style={styles.btnTitle}>Зареєструватись</Text>
             </TouchableOpacity>
-          </View>
-          <Text style={styles.subTitle}>Вже є акаунт? Увійти</Text>
-        </ImageBackground>
-      </ImageBackground>
-      <StatusBar style="auto" />
-    </View>
+            <Text style={styles.subTitle}>Вже є акаунт? Увійти</Text>
+          </ImageBackground>
+        </KeyboardAvoidingView>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  image: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-    alignItems: "center",
+    // alignItems: "center",
+    // justifyContent: "flex-end",
+    //paddingBottom: 30,
   },
   bg: {
-    //flex: 1,
-
     width: 375,
     height: 549,
     borderRadius: 25,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: "#f8f8ff",
   },
@@ -81,20 +97,20 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 2,
-    // borderColor: "#f0fc ",
     height: 50,
     width: 343,
     borderRadius: 10,
-    color: "#f0f8ff",
+    color: "#000000",
     backgroundColor: "#f5f5f5",
   },
 
   form: {
     // marginHorizontal: 10,
+    alignItems: "center",
+    // justifyContent: "center",
   },
 
   btn: {
-    //backgroundColor: "FF6C00",
     height: 51,
     width: 343,
     borderRadius: 16,
@@ -113,5 +129,6 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Reg",
     color: "#00008b",
     marginTop: 16,
+    marginBottom: 45,
   },
 });

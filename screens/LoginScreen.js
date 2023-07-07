@@ -1,5 +1,4 @@
-import React from "react";
-import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,63 +6,77 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 
 export default function LoginScreen() {
+  console.log(Platform.OS);
+
+  const [text, setText] = useState("");
+  const [number, setNumber] = useState("");
+
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        style={styles.image}
-        source={require("../assets/images/photo-bg.jpg")}
-      >
-        <ImageBackground style={styles.bg}>
-          <Text style={styles.title}>Увійти</Text>
-          <View style={styles.form}>
-            <View style={{ marginTop: 32 }}>
-              <TextInput
-                style={styles.input}
-                placeholder="Адреса електронної пошти"
-                placeholderTextColor="#a9a9a9"
-              />
-            </View>
-            <View style={{ marginTop: 16 }}>
-              <TextInput
-                style={styles.input}
-                secureTextEntry={true}
-                placeholder="Пароль"
-                placeholderTextColor="#a9a9a9"
-              />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{
+            height: "100%",
+            justifyContent: "flex-end",
+          }}
+        >
+          <ImageBackground style={styles.bg}>
+            <View style={styles.form}>
+              <Text style={styles.title}>Увійти</Text>
+              <View style={{ marginTop: 32 }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Адреса електронної пошти"
+                  placeholderTextColor="#a9a9a9"
+                  value={text}
+                  onChangeText={setText}
+                />
+              </View>
+              <View style={{ marginTop: 16 }}>
+                <TextInput
+                  style={styles.input}
+                  secureTextEntry={true}
+                  placeholder="Пароль"
+                  placeholderTextColor="#a9a9a9"
+                  value={number}
+                  onChangeText={setNumber}
+
+                  // keyboardType="numeric"
+                />
+              </View>
             </View>
             <TouchableOpacity activeOpacity={0.6} style={styles.btn}>
               <Text style={styles.btnTitle}>Увійти</Text>
             </TouchableOpacity>
-          </View>
-          <Text style={styles.subTitle}>Немає акаунту? Зареєструватись</Text>
-        </ImageBackground>
-      </ImageBackground>
-      <StatusBar style="auto" />
-    </View>
+            <Text style={styles.subTitle}>Немає акаунту? Зареєструватись</Text>
+          </ImageBackground>
+        </KeyboardAvoidingView>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // alignItems: "center",
+    // justifyContent: "flex-end",
+    // paddingBottom: 10,
   },
-  image: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  bg: {
-    //flex: 1,
 
+  bg: {
     width: 375,
     height: 549,
     borderRadius: 25,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: "#f8f8ff",
   },
@@ -74,19 +87,21 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 2,
-    // borderColor: "#2f4f4f ",
     height: 50,
     width: 343,
     borderRadius: 10,
-    color: "#f0f8ff",
+    color: "#000000",
     backgroundColor: "#f5f5f5",
   },
   form: {
     // marginHorizontal: 10,
+
+    alignItems: "center",
+    // justifyContent: "flex-end",
+    // paddingBottom: 30,
   },
 
   btn: {
-    //backgroundColor: "FF6C00",
     height: 51,
     width: 343,
     borderRadius: 16,
