@@ -10,57 +10,63 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 
 export default function LoginScreen() {
   console.log(Platform.OS);
 
-  const [text, setText] = useState("");
-  const [number, setNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const onLogin = () => {
+    Alert.alert("Credentials", ` ${email} +${password}`);
+  };
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={{
-            height: "100%",
-            justifyContent: "flex-end",
-          }}
-        >
-          <ImageBackground style={styles.bg}>
-            <View style={styles.form}>
-              <Text style={styles.title}>Увійти</Text>
-              <View style={{ marginTop: 32 }}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Адреса електронної пошти"
-                  placeholderTextColor="#a9a9a9"
-                  value={text}
-                  onChangeText={setText}
-                />
-              </View>
-              <View style={{ marginTop: 16 }}>
-                <TextInput
-                  style={styles.input}
-                  secureTextEntry={true}
-                  placeholder="Пароль"
-                  placeholderTextColor="#a9a9a9"
-                  value={number}
-                  onChangeText={setNumber}
-
-                  // keyboardType="numeric"
-                />
-              </View>
+    <View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{
+          height: "100%",
+          justifyContent: "flex-end",
+        }}
+      >
+        <ImageBackground style={styles.bg}>
+          <View style={styles.form}>
+            <Text style={styles.title}>Увійти</Text>
+            <View style={{ marginTop: 32 }}>
+              <TextInput
+                style={styles.input}
+                placeholder="Адреса електронної пошти"
+                placeholderTextColor="#a9a9a9"
+                value={email}
+                onChangeText={setEmail}
+              />
             </View>
-            <TouchableOpacity activeOpacity={0.6} style={styles.btn}>
-              <Text style={styles.btnTitle}>Увійти</Text>
-            </TouchableOpacity>
-            <Text style={styles.subTitle}>Немає акаунту? Зареєструватись</Text>
-          </ImageBackground>
-        </KeyboardAvoidingView>
-      </View>
-    </TouchableWithoutFeedback>
+            <View style={{ marginTop: 16 }}>
+              <TextInput
+                style={styles.input}
+                secureTextEntry={true}
+                placeholder="Пароль"
+                placeholderTextColor="#a9a9a9"
+                value={password}
+                onChangeText={setPassword}
+
+                // keyboardType="numeric"
+              />
+            </View>
+          </View>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.btn}
+            onPress={onLogin}
+          >
+            <Text style={styles.btnTitle}>Увійти</Text>
+          </TouchableOpacity>
+          <Text style={styles.subTitle}>Немає акаунту? Зареєструватись</Text>
+        </ImageBackground>
+      </KeyboardAvoidingView>
+    </View>
   );
 }
 
