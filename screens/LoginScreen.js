@@ -9,19 +9,37 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
-  TouchableWithoutFeedback,
   Alert,
 } from "react-native";
 
 export default function LoginScreen() {
   console.log(Platform.OS);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const onLogin = () => {
-    Alert.alert("Credentials", ` ${email} +${password}`);
+  const initialState = {
+    email: "",
+    password: "",
   };
+
+  const [isShowKeyboard, setShowIsKeyboard] = useState(false);
+  const [state, setState] = useState(initialState);
+
+  const keyboardHide = () => {
+    setShowIsKeyboard(false);
+    Keyboard.dismiss();
+    console.log(state);
+    setState(initialState);
+  };
+
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+
+  // const resetEmail = () => {
+  //   setEmail("");
+  // };
+
+  // const onLogin = () => {
+  //   Alert.alert("Credentials", ` ${email} +${password}`);
+  // };
   return (
     <View>
       <KeyboardAvoidingView
@@ -39,9 +57,17 @@ export default function LoginScreen() {
                 style={styles.input}
                 placeholder="Адреса електронної пошти"
                 placeholderTextColor="#a9a9a9"
-                value={email}
-                onChangeText={setEmail}
+                value={state.email}
+                onFocus={() => {
+                  setShowIsKeyboard(true);
+                }}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, email: value }))
+                }
+                // onChangeText={setEmail}
+                // onPress={resetEmail}
               />
+              {/* <Button title="Очистити" onPress={resetEmail} /> */}
             </View>
             <View style={{ marginTop: 16 }}>
               <TextInput
@@ -49,8 +75,14 @@ export default function LoginScreen() {
                 secureTextEntry={true}
                 placeholder="Пароль"
                 placeholderTextColor="#a9a9a9"
-                value={password}
-                onChangeText={setPassword}
+                value={state.password}
+                onFocus={() => {
+                  setShowIsKeyboard(true);
+                }}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, password: value }))
+                }
+                // onChangeText={setPassword}
 
                 // keyboardType="numeric"
               />
@@ -59,7 +91,8 @@ export default function LoginScreen() {
           <TouchableOpacity
             activeOpacity={0.6}
             style={styles.btn}
-            onPress={onLogin}
+            // onPress={onLogin}
+            onPress={keyboardHide}
           >
             <Text style={styles.btnTitle}>Увійти</Text>
           </TouchableOpacity>

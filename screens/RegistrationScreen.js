@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,19 +8,36 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
   Alert,
 } from "react-native";
 
 export default function RegisterScreen() {
   console.log(Platform.OS);
 
-  const [login, setLogin] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const onRegister = () => {
-    Alert.alert("Credentials", `${login} + ${email} +${password}`);
+  const initialState = {
+    login: "",
+    email: "",
+    password: "",
   };
+
+  const [isShowKeyboard, setShowIsKeyboard] = useState(false);
+  const [state, setState] = useState(initialState);
+
+  const keyboardHide = () => {
+    setShowIsKeyboard(false);
+    Keyboard.dismiss();
+    console.log(state);
+    setState(initialState);
+  };
+  ////////
+  // const [login, setLogin] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+
+  // const onRegister = () => {
+  //   Alert.alert("Credentials", `${login} + ${email} +${password}`);
+  // };
 
   return (
     <View>
@@ -39,8 +56,14 @@ export default function RegisterScreen() {
                 style={styles.input}
                 placeholder="Логін"
                 placeholderTextColor="#a9a9a9"
-                value={login}
-                onChangeText={setLogin}
+                value={state.login}
+                onFocus={() => {
+                  setShowIsKeyboard(true);
+                }}
+                // onChangeText={setLogin}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, login: value }))
+                }
               />
             </View>
             <View style={{ marginTop: 16 }}>
@@ -48,8 +71,14 @@ export default function RegisterScreen() {
                 style={styles.input}
                 placeholder="Адреса електронної пошти"
                 placeholderTextColor="#a9a9a9"
-                value={email}
-                onChangeText={setEmail}
+                value={state.email}
+                // onChangeText={setEmail}
+                onFocus={() => {
+                  setShowIsKeyboard(true);
+                }}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, email: value }))
+                }
               />
             </View>
             <View style={{ marginTop: 16 }}>
@@ -58,15 +87,22 @@ export default function RegisterScreen() {
                 secureTextEntry={true}
                 placeholder="Пароль"
                 placeholderTextColor="#a9a9a9"
-                value={password}
-                onChangeText={setPassword}
+                value={state.password}
+                // onChangeText={setPassword}
+                onFocus={() => {
+                  setShowIsKeyboard(true);
+                }}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, password: value }))
+                }
               />
             </View>
           </View>
           <TouchableOpacity
             activeOpacity={0.6}
             style={styles.btn}
-            onPress={onRegister}
+            // onPress={onRegister}
+            onPress={keyboardHide}
           >
             <Text style={styles.btnTitle}>Зареєструватись</Text>
           </TouchableOpacity>
