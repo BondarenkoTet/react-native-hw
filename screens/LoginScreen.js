@@ -3,16 +3,15 @@ import {
   StyleSheet,
   Text,
   View,
-  ImageBackground,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
   Keyboard,
-  Alert,
+  Button,
 } from "react-native";
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   console.log(Platform.OS);
 
   const initialState = {
@@ -30,16 +29,6 @@ export default function LoginScreen() {
     setState(initialState);
   };
 
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-
-  // const resetEmail = () => {
-  //   setEmail("");
-  // };
-
-  // const onLogin = () => {
-  //   Alert.alert("Credentials", ` ${email} +${password}`);
-  // };
   return (
     <View>
       <KeyboardAvoidingView
@@ -49,55 +38,48 @@ export default function LoginScreen() {
           justifyContent: "flex-end",
         }}
       >
-        <ImageBackground style={styles.bg}>
-          <View style={styles.form}>
-            <Text style={styles.title}>Увійти</Text>
-            <View style={{ marginTop: 32 }}>
-              <TextInput
-                style={styles.input}
-                placeholder="Адреса електронної пошти"
-                placeholderTextColor="#a9a9a9"
-                value={state.email}
-                onFocus={() => {
-                  setShowIsKeyboard(true);
-                }}
-                onChangeText={(value) =>
-                  setState((prevState) => ({ ...prevState, email: value }))
-                }
-                // onChangeText={setEmail}
-                // onPress={resetEmail}
-              />
-              {/* <Button title="Очистити" onPress={resetEmail} /> */}
-            </View>
-            <View style={{ marginTop: 16 }}>
-              <TextInput
-                style={styles.input}
-                secureTextEntry={true}
-                placeholder="Пароль"
-                placeholderTextColor="#a9a9a9"
-                value={state.password}
-                onFocus={() => {
-                  setShowIsKeyboard(true);
-                }}
-                onChangeText={(value) =>
-                  setState((prevState) => ({ ...prevState, password: value }))
-                }
-                // onChangeText={setPassword}
-
-                // keyboardType="numeric"
-              />
-            </View>
+        <View style={styles.form}>
+          <Text style={styles.title}>Увійти</Text>
+          <View style={{ marginTop: 32 }}>
+            <TextInput
+              style={styles.input}
+              placeholder="Адреса електронної пошти"
+              placeholderTextColor="#a9a9a9"
+              value={state.email}
+              onFocus={() => {
+                setShowIsKeyboard(true);
+              }}
+              onChangeText={(value) =>
+                setState((prevState) => ({ ...prevState, email: value }))
+              }
+            />
           </View>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={styles.btn}
-            // onPress={onLogin}
-            onPress={keyboardHide}
-          >
-            <Text style={styles.btnTitle}>Увійти</Text>
-          </TouchableOpacity>
+          <View style={{ marginTop: 16 }}>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={true}
+              placeholder="Пароль"
+              placeholderTextColor="#a9a9a9"
+              value={state.password}
+              onFocus={() => {
+                setShowIsKeyboard(true);
+              }}
+              onChangeText={(value) =>
+                setState((prevState) => ({ ...prevState, password: value }))
+              }
+            />
+          </View>
+        </View>
+        <TouchableOpacity
+          activeOpacity={0.6}
+          style={styles.btn}
+          onPress={keyboardHide}
+        >
+          <Text style={styles.btnTitle}>Увійти</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Registration")}>
           <Text style={styles.subTitle}>Немає акаунту? Зареєструватись</Text>
-        </ImageBackground>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
     </View>
   );
@@ -105,7 +87,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     // alignItems: "center",
     // justifyContent: "flex-end",
     // paddingBottom: 10,

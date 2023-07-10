@@ -4,13 +4,18 @@ import {
   StyleSheet,
   View,
   ImageBackground,
-  Keyboard,
   TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
-import RegistrationScreen from "./screens/RegistrationScreen";
-import LoginScreen from "./screens/LoginScreen";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import StackNavigator from "./StackNavigator";
+//import { createStackNavigator } from "@react-navigation/stack";
+//import RegistrationScreen from "./screens/RegistrationScreen";
+//import LoginScreen from "./screens/LoginScreen";
+//import PostsScreen from "./screens/PostsScreen";
 import { useFonts } from "expo-font";
-import * as Font from "expo-font";
+// import * as Font from "expo-font";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,22 +25,43 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
+  // const MainStack = createStackNavigator();
 
   return (
-    <>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <ImageBackground
-            source={require("./assets/images/photo-bg.jpg")}
-            style={styles.image}
-          >
-            <LoginScreen />
-            {/* <RegistrationScreen /> */}
-          </ImageBackground>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("./assets/images/photo-bg.jpg")}
+          style={styles.image}
+        >
+          {/* <NavigationContainer>
+            <MainStack.Navigator>
+              <MainStack.Screen
+                //options={{ headerShown: false }}
+                name="Registration"
+                component={RegistrationScreen}
+              />
+              <MainStack.Screen
+                //  options={{ headerShown: false }}
+                name="Login"
+                component={LoginScreen}
+              />
+              {/* <MainStack.Screen
+              // options={{ headerShown: false }}
+              name="Posts"
+              component={PostsScreen}
+            /> */}
+          {/* </MainStack.Navigator>
+          </NavigationContainer> */}
+          {/* */}
+
+          <NavigationContainer>
+            <StackNavigator />
+          </NavigationContainer>
           <StatusBar style="auto" />
-        </View>
-      </TouchableWithoutFeedback>
-    </>
+        </ImageBackground>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -49,6 +75,5 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     justifyContent: "flex-end",
     alignItems: "center",
-    //paddingBottom: 30,
   },
 });
